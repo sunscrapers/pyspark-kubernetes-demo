@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: spark
+  name: pyspark-notebook-deployment
+  labels:
+    app: pyspark-notebook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pyspark-notebook
+  template:
+    metadata:
+      labels:
+        app: pyspark-notebook
+    spec:
+      serviceAccountName: spark
+      securityContext:
+        fsGroup: 100
+        runAsUser: 1000
+      containers:
+      - name: pyspark-notebook
+        image: jupyter/pyspark-notebook:python-3.10.11
+        ports:
+          - containerPort: 8888
+        volumeMounts:
+        - mountPath: /home/jovyan/work
+          name: pyspark-notebook-pv
+        resources:
+          limits:
+            memory: 2Gi
+      volumes:
+        - name: pyspark-notebook-pv
+          hostPath:
+            path: /Users/mzelazkiewicz/Work/sunscrapers/pyspark-kuberentes/pyspark-notebook
