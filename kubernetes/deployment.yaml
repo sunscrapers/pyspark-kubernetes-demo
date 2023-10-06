@@ -33,4 +33,4 @@ spec:
       volumes:
         - name: pyspark-notebook-pv
           hostPath:
-            path: /Users/mzelazkiewicz/Work/sunscrapers/pyspark-kuberentes/pyspark-notebook
+            path: /<path_to_project>/pyspark-kuberentes/pyspark-notebook
